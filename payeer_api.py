@@ -1,7 +1,7 @@
 import requests
 
 
-class PayeerApi:
+class PayeerAPI:
     def __init__(self, ACCOUNT, APIID, APIPASS):
         self.ACCOUNT = ACCOUNT
         self.APIID = APIID
@@ -9,7 +9,7 @@ class PayeerApi:
 
 
     """Request on Payeer API Server"""
-    def post_request(self, data):
+    def __post_request(self, data):
         return requests.post('https://payeer.com/ajax/api/api.php', data=data).json()
 
 
@@ -20,13 +20,13 @@ class PayeerApi:
     send a POST query to the URL https://payeer.com/ajax/api/api.php with three parameters: account, apiId и apiPass"""
     def check_authorization(self):
         data = {'account':self.ACCOUNT, 'apiId':self.APIID, 'apiPass':self.APIPASS}
-        return self.post_request(data)
+        return self.__post_request(data)
 
 
     """You can check the existence of an account number prior to transfer in the Payeer system"""
     def check_existence_account_payeer(self, payeer_user):
         data = {'account':self.ACCOUNT, 'apiId':self.APIID, 'apiPass':self.APIPASS, 'action':'checkUser',  'user':payeer_user}
-        return self.post_request(data)
+        return self.__post_request(data)
 
 
     """This method allows you to check the possibility of a payout without actually creating a payout
@@ -43,26 +43,26 @@ class PayeerApi:
         'curOut' : currency_incoming,
         'param_ACCOUNT_NUMBER' : payment_account
         }
-        return self.post_request(data)
+        return self.__post_request(data)
     
     """-----------------------------------------------------------------------"""
     
     """Getting a wallet balance"""
     def get_balance(self):
         data = {'account':self.ACCOUNT, 'apiId':self.APIID, 'apiPass':self.APIPASS, 'action':'getBalance'}
-        return self.post_request(data)
+        return self.__post_request(data)
 
 
     """This method returns a list of payment systems that are available for payout"""
     def get_all_payment_system(self):
         data = {'account':self.ACCOUNT, 'apiId':self.APIID, 'apiPass':self.APIPASS, 'action':'getPaySystems'}
-        return self.post_request(data)
+        return self.__post_request(data)
 
 
     """Get the history of account transactions"""
     def get_history_payment_operations(self):
         data = {'account':self.ACCOUNT, 'apiId':self.APIID, 'apiPass':self.APIPASS, 'action':'history'}
-        return self.post_request(data)
+        return self.__post_request(data)
    
     """-----------------------------------------------------------------------"""
 
@@ -79,10 +79,10 @@ class PayeerApi:
         'curOut' : currency_incoming,
         'to' : payeer_account
         }
-        return self.post_request(data)
+        return self.__post_request(data)
 
 
-
+    """A payout to any payment system that supports Payeer"""
     def universal_payout(self, payment_system_id, sum_incoming, currency_outgoing, currency_incoming, payment_account):
         data = {
         'account': self.ACCOUNT,
@@ -95,7 +95,7 @@ class PayeerApi:
         'curOut' : currency_incoming,
         'param_ACCOUNT_NUMBER' : payment_account
         }
-        return self.post_request(data)
+        return self.__post_request(data)
 
 
 
