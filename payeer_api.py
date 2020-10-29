@@ -3,10 +3,41 @@ import requests
 
 class PayeerAPI:
     def __init__(self, ACCOUNT, APIID, APIPASS):
-        self.ACCOUNT = ACCOUNT
-        self.APIID = APIID
-        self.APIPASS = APIPASS
+        self.__ACCOUNT = ACCOUNT
+        self.__APIID = APIID
+        self.__APIPASS = APIPASS
 
+    """-----------------------------------------------------------------------"""
+
+    def get_ACCOUNT(self):
+        return self.__ACCOUNT
+    
+    def get_APIID(self):
+        return self.__APIID
+
+    def get_APIPASS(self):
+        return self.__APIPASS
+
+    """-----------------------------------------------------------------------"""
+
+    def set_ACCOUNT(self, edit_ACCOUNT):
+        if edit_ACCOUNT[0] == 'P':
+            self.__ACCOUNT = edit_ACCOUNT
+        else: 
+            return 'wrong format, ACOOUNT starting with P'
+        
+    def set_APIID(self, edit_APIID):
+        self.__APIID = edit_APIID
+
+
+    def set_APIPASS(self, edit_APIPASS):
+        self.__APIPASS = edit_APIPASS
+
+    """-----------------------------------------------------------------------"""
+
+    ACCOUNT=property(fset=set_ACCOUNT, fget=get_ACCOUNT)
+    APIID=property(fset=set_APIID, fget=get_APIID)
+    APIPASS=property(fset=set_APIPASS, fget=get_APIPASS)
 
     """Request on Payeer API Server"""
     def __post_request(self, data):
@@ -98,7 +129,9 @@ class PayeerAPI:
         return self.__post_request(data)
 
 
-
-
-
-
+user = PayeerAPI('P1031822123', '1167537564', 'tWBRuEkJ77tbpS4')
+print(user.check_authorization())
+print(user.get_balance())
+user.APIID='1167537565'
+print(user.check_authorization())
+print(user.get_balance())
