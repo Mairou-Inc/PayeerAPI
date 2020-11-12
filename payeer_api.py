@@ -127,11 +127,5 @@ class PayeerAPI:
         'param_ACCOUNT_NUMBER' : payment_account
         }
         return self.__post_request(data)
-
-
-user = PayeerAPI('P1031822123', '1167537564', 'tWBRuEkJ77tbpS4')
-print(user.check_authorization())
-print(user.get_balance())
-user.APIID='1167537565'
-print(user.check_authorization())
-print(user.get_balance())
+    
+    
